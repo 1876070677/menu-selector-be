@@ -16,9 +16,12 @@ export class Menu {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column({ type: 'uuid' })
+  orgId: string;
+
   @ManyToOne(() => Organization)
   @JoinColumn({ name: 'orgId' })
-  orgId: Organization;
+  organization: Organization;
 
   @Column({ type: 'varchar', length: 64 })
   name: string;

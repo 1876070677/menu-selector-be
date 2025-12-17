@@ -13,7 +13,7 @@ export class Organization {
   id: string;
 
   // code: 조직 식별자 (영어), NOT NULL, UNIQUE
-  @Column({ type: 'varchar', length: 64 })
+  @Column({ type: 'varchar', length: 64, unique: true })
   code: string;
 
   // createdAt: 생성 시간
