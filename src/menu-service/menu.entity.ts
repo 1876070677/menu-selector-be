@@ -29,6 +29,16 @@ export class Menu {
   @Column({ type: 'decimal' })
   dist: number;
 
+  @Column({ type: 'boolean', default: false })
+  mealTicket: boolean;
+
+  @Column({
+    type: 'varchar',
+    length: 10,
+    default: 'ETC',
+  })
+  category: 'KO' | 'JP' | 'CH' | 'ETC';
+
   @CreateDateColumn({ type: 'timestamptz', default: () => 'now()' })
   createdAt: Date;
 

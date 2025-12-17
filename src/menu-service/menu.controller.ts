@@ -27,7 +27,13 @@ export class MenuController {
 
   @Post('/')
   async createMenu(@Body() body: CreateMenuDto): Promise<Menu> {
-    return await this.menuService.create(body.orgId, body.name, body.dist ?? 0);
+    return await this.menuService.create(
+      body.orgId,
+      body.name,
+      body.dist ?? 0,
+      body.mealTicket,
+      body.category,
+    );
   }
 
   @Patch('/:menuId')
@@ -35,7 +41,13 @@ export class MenuController {
     @Param('menuId') menuId: string,
     @Body() body: UpdateMenuDto,
   ): Promise<Menu> {
-    return await this.menuService.update(menuId, body.name, body.dist);
+    return await this.menuService.update(
+      menuId,
+      body.name,
+      body.dist,
+      body.mealTicket,
+      body.category,
+    );
   }
 
   @Delete('/:menuId')

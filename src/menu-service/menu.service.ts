@@ -32,9 +32,17 @@ export class MenuService {
    * @param orgId 조직 ID
    * @param name 메뉴 이름
    * @param dist 가중치
+   * @param mealTicket 식권 사용 여부
+   * @param category 카테고리
    * @returns 생성된 Menu 엔티티 객체 (Promise<Menu>)
    */
-  async create(orgId: string, name: string, dist: number): Promise<Menu> {
+  async create(
+    orgId: string,
+    name: string,
+    dist: number,
+    mealTicket: boolean,
+    category: 'KO' | 'JP' | 'CH' | 'ETC',
+  ): Promise<Menu> {
     const organization = await this.organizationRepository.findOne({
       where: { id: orgId },
     });
@@ -49,6 +57,8 @@ export class MenuService {
       orgId,
       name,
       dist,
+      mealTicket,
+      category,
     });
     return await this.menuRepository.save(menu);
   }
@@ -58,9 +68,17 @@ export class MenuService {
    * @param menuId 메뉴 ID
    * @param name 메뉴 이름 (선택)
    * @param dist 가중치 (선택)
+   * @param mealTicket 식권 사용 여부 (선택)
+   * @param category 카테고리 (선택)
    * @returns 수정된 Menu 엔티티 객체 (Promise<Menu>)
    */
-  async update(menuId: string, name?: string, dist?: number): Promise<Menu> {
+  async update(
+    menuId: string,
+    name?: string,
+    dist?: number,
+    mealTicket?: boolean,
+    category?: 'KO' | 'JP' | 'CH' | 'ETC',
+  ): Promise<Menu> {
     const menu = await this.menuRepository.findOne({
       where: { id: menuId },
     });
@@ -77,6 +95,14 @@ export class MenuService {
 
     if (dist !== undefined) {
       menu.dist = dist;
+    }
+
+    if (mealTicket !== undefined) {
+      menu.mealTicket = mealTicket;
+    }
+
+    if (category !== undefined) {
+      menu.category = category;
     }
 
     return await this.menuRepository.save(menu);
