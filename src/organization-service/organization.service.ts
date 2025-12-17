@@ -16,15 +16,19 @@ export class OrganizationService {
    * @param code 조직 코드
    * @returns 생성된 Organization 엔티티 객체 (Promise<Organization>)
    */
+  async findByCode(code: string): Promise<Organization | null> {
+    return await this.organizationRepository.findOne({
+      where: { code },
+    });
+  }
+
   async create(code: string): Promise<Organization> {
     const existingOrg = await this.organizationRepository.findOne({
       where: { code },
     });
 
     if (existingOrg) {
-      throw new ConflictException(
-        `조직 코드 '${code}'는 이미 존재합니다.`,
-      );
+      throw new ConflictException(`조직 코드 '${code}'는 이미 존재합니다.`);
     }
 
     const organization = this.organizationRepository.create({
